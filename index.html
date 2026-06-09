@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Global Green Skills Index</title>
+    <link rel="icon" type="image/svg+xml" href="/linkedin-logomark.svg" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body class="overflow-hidden w-screen h-screen">
+
+    <!-- 3D canvas -->
+    <canvas id="globe-canvas" class="fixed inset-0 w-full h-full"></canvas>
+
+    <!-- ── HERO OVERLAY ───────────────────────────────────────────────────── -->
+    <div id="hero-overlay"
+         class="fixed inset-0 z-40 flex flex-col items-center justify-center
+                text-center px-6 sm:px-8 pointer-events-none select-none">
+
+      <!-- Eyebrow -->
+      <p id="hero-eyebrow"
+         class="text-[10px] sm:text-xs font-semibold tracking-[0.28em] uppercase mb-3 sm:mb-5"
+         style="color:#8EBCF0">
+        LinkedIn Economic Graph
+      </p>
+
+      <!-- H1 — Community Pro Bold, 2 lines -->
+      <h1 id="hero-h1"
+          class="text-white leading-[1.08] mb-4 sm:mb-6 max-w-[90vw] sm:max-w-lg"
+          style="font-family:'Community Pro',sans-serif;font-weight:700;
+                 font-size:clamp(1.9rem,8vw,4rem)">
+        Global Green<br>Skills Index
+      </h1>
+
+      <!-- Description — Community Pro Medium -->
+      <p id="hero-desc"
+         class="leading-relaxed max-w-[34ch] sm:max-w-[38ch] mb-8 sm:mb-10"
+         style="font-family:'Community Pro',sans-serif;font-weight:500;
+                font-size:clamp(0.8rem,2vw,1.05rem);color:rgba(255,255,255,0.60)">
+        A real-time global visualization tracking the gap between sustainability
+        talent supply and hiring demand. Select a global hub to trace
+        cross-border talent dependencies.
+      </p>
+
+      <!-- CTA — min 44px touch target -->
+      <button id="hero-cta"
+              class="px-7 sm:px-9 py-3 sm:py-3.5 min-h-[44px] rounded-full
+                     tracking-[0.2em] uppercase cursor-pointer
+                     border border-white/25 text-white text-[11px] sm:text-sm
+                     hover:border-white/55 hover:bg-white/[0.08]
+                     active:bg-white/[0.12]
+                     transition-all duration-300 backdrop-blur-sm pointer-events-auto"
+              style="font-family:'Community Pro',sans-serif;font-weight:500">
+        Explore the data
+      </button>
+    </div>
+
+    <!-- ── DETAIL PANEL: positioned near clicked dot via JS (full-width on mobile) -->
+    <div id="detail-panel" class="fixed z-20 panel-hidden" style="width:272px">
+      <div class="relative rounded-2xl border border-white/[0.09] bg-white/[0.05]
+                  backdrop-blur-2xl shadow-[0_12px_48px_rgba(0,0,0,0.6)] p-5">
+
+        <button id="panel-close"
+                class="absolute top-3 right-3 w-6 h-6 rounded-full
+                       flex items-center justify-center
+                       text-slate-500 hover:text-white hover:bg-white/10
+                       transition-colors cursor-pointer text-[13px] leading-none">
+          ✕
+        </button>
+
+        <div class="flex items-start justify-between mb-4 pr-6">
+          <div>
+            <h2 id="panel-city"    class="text-white font-bold text-xl leading-tight"></h2>
+            <p  id="panel-country" class="text-slate-500 text-sm mt-0.5"></p>
+          </div>
+          <span id="panel-status"
+                class="text-[10px] font-semibold px-2.5 py-1 rounded-full border mt-0.5
+                       flex-shrink-0 tracking-wide uppercase"></span>
+        </div>
+
+        <div class="border-t border-white/[0.07] pt-4 mb-4">
+          <p id="panel-primary-stat"  class="text-[2.6rem] font-black text-white leading-none tracking-tight"></p>
+          <p id="panel-primary-label" class="text-slate-500 text-[10px] mt-1.5 uppercase tracking-widest"></p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5 mb-4">
+          <div class="rounded-xl bg-white/[0.04] border border-white/[0.05] p-3">
+            <p id="panel-detail1" class="text-white font-bold text-lg leading-none"></p>
+            <p id="panel-label1"  class="text-slate-500 text-[10px] mt-1.5 leading-snug"></p>
+          </div>
+          <div class="rounded-xl bg-white/[0.04] border border-white/[0.05] p-3">
+            <p id="panel-detail2" class="text-white font-semibold text-sm leading-tight"></p>
+            <p id="panel-label2"  class="text-slate-500 text-[10px] mt-1.5 leading-snug"></p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-[9px] uppercase tracking-[0.18em] text-slate-600 mb-2">Connected Hubs</p>
+          <div id="panel-connections" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BOTTOM PANEL: hidden until hero dismissed ──────────────────── -->
+    <div id="bottom-panel"
+         class="fixed bottom-safe left-1/2 -translate-x-1/2 z-10 w-full max-w-[540px] px-3 sm:px-4"
+         style="opacity:0;pointer-events:none;bottom:max(1.25rem,env(safe-area-inset-bottom,1.25rem))">
+
+      <!-- Info overlay — floats above the panel when triggered -->
+      <div id="info-overlay"
+           class="absolute bottom-full right-4 mb-3 w-[260px]
+                  rounded-2xl border border-white/[0.1] bg-white/[0.06]
+                  backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] p-4
+                  pointer-events-none opacity-0 translate-y-1.5">
+        <!-- Close button -->
+        <button id="info-close"
+                class="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center
+                       text-slate-500 hover:text-white hover:bg-white/10
+                       transition-colors cursor-pointer text-[13px] leading-none">
+          ✕
+        </button>
+        <p class="text-[10px] font-semibold tracking-[0.18em] uppercase mb-2 pr-6"
+           style="color:#8EBCF0">About this data</p>
+        <p class="text-white/70 text-[12px] leading-relaxed">
+          This project visualizes aggregated and anonymized labor market insights
+          from the LinkedIn Economic Graph, tracking the global green talent
+          transition across major economic hubs.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-white/[0.09] bg-white/[0.04] backdrop-blur-2xl
+                  shadow-[0_8px_32px_rgba(0,0,0,0.45)] px-5 pt-4 pb-3">
+
+        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-white/[0.07]">
+          <img src="/linkedin-logomark.svg" width="22" height="22" alt="LinkedIn"
+               class="flex-shrink-0 rounded-[4px]" />
+          <div class="min-w-0">
+            <h1 class="text-white font-bold text-[10.5px] tracking-[0.13em] uppercase leading-tight">
+              Global Green Skills Index
+            </h1>
+            <p class="text-slate-600 text-[9px] tracking-wide mt-0.5">LinkedIn Economic Graph Insights</p>
+          </div>
+          <!-- Info icon button -->
+          <button id="info-btn"
+                  class="ml-auto flex-shrink-0 w-6 h-6 flex items-center justify-center
+                         rounded-full text-slate-600 hover:text-slate-300
+                         hover:bg-white/[0.06] transition-colors cursor-pointer">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                 stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+              <circle cx="7" cy="7" r="6"/>
+              <line x1="7" y1="6.5" x2="7" y2="10"/>
+              <circle cx="7" cy="4.5" r="0.6" fill="currentColor" stroke="none"/>
+            </svg>
+          </button>
+        </div>
+
+        <ul id="city-list"
+            class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-x-2 gap-y-0.5
+                   overflow-y-auto max-h-[88px] sm:max-h-[100px] pr-0.5 mb-3
+                   scrollbar-thin scrollbar-thumb-white/10"></ul>
+
+        <div class="border-t border-white/[0.06] pt-2.5
+                    flex items-center justify-center gap-5 flex-wrap">
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style="background:#ff3b30;box-shadow:0 0 4px #ff3b3099"></span>
+            <span class="text-slate-500 text-[9px]">Critical Deficit</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style="background:#ffcc00;box-shadow:0 0 4px #ffcc0099"></span>
+            <span class="text-slate-500 text-[9px]">High Demand</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style="background:#34c759;box-shadow:0 0 4px #34c75999"></span>
+            <span class="text-slate-500 text-[9px]">Balanced</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style="background:#007aff;box-shadow:0 0 4px #007aff99"></span>
+            <span class="text-slate-500 text-[9px]">Talent Surplus</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

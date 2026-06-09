@@ -1,0 +1,130 @@
+[
+  {
+    "city": "London",
+    "country": "United Kingdom",
+    "coordinates": [51.5074, -0.1278],
+    "status": "Critical Deficit",
+    "statusColor": "#ff3b30",
+    "metrics": {
+      "primaryStat": "+46.0%",
+      "primaryLabel": "Green Demand Surge",
+      "detail1": "13.0%",
+      "label1": "Total Green Job Share",
+      "detail2": "Wind & Sustainability",
+      "label2": "Top In-Demand Skills"
+    },
+    "connections": ["Dublin", "Paris", "Frankfurt"]
+  },
+  {
+    "city": "Singapore",
+    "country": "Singapore",
+    "coordinates": [1.3521, 103.8198],
+    "status": "High Demand",
+    "statusColor": "#ffcc00",
+    "metrics": {
+      "primaryStat": "+27.1%",
+      "primaryLabel": "Green Demand Surge",
+      "detail1": "9.4%",
+      "label1": "Total Green Job Share",
+      "detail2": "Carbon Accounting",
+      "label2": "Top In-Demand Skills"
+    },
+    "connections": ["Sydney", "Tokyo", "Bangalore"]
+  },
+  {
+    "city": "San Francisco",
+    "country": "United States",
+    "coordinates": [37.7749, -122.4194],
+    "status": "Critical Deficit",
+    "statusColor": "#ff3b30",
+    "metrics": {
+      "primaryStat": "+39.5%",
+      "primaryLabel": "Green Demand Surge",
+      "detail1": "11.2%",
+      "label1": "Total Green Job Share",
+      "detail2": "EV Infrastructure & Grid",
+      "label2": "Top In-Demand Skills"
+    },
+    "connections": ["New York", "Tokyo", "London"]
+  },
+  {
+    "city": "Sydney",
+    "country": "Australia",
+    "coordinates": [-33.8688, 151.2093],
+    "status": "Balanced",
+    "statusColor": "#34c759",
+    "metrics": {
+      "primaryStat": "+12.4%",
+      "primaryLabel": "Green Demand Surge",
+      "detail1": "7.1%",
+      "label1": "Total Green Job Share",
+      "detail2": "Renewable Energy Mgt",
+      "label2": "Top In-Demand Skills"
+    },
+    "connections": ["Singapore", "Auckland"]
+  },
+  {
+    "city": "São Paulo",
+    "country": "Brazil",
+    "coordinates": [-23.5505, -46.6333],
+    "status": "Talent Surplus",
+    "statusColor": "#007aff",
+    "metrics": {
+      "primaryStat": "+5.2%",
+      "primaryLabel": "Green Demand Surge",
+      "detail1": "14.8%",
+      "label1": "Total Green Job Share",
+      "detail2": "Biofuels & Agroecology",
+      "label2": "Top In-Demand Skills"
+    },
+    "connections": ["New York", "Lisbon"]
+  },
+  {
+    "city": "Frankfurt",
+    "country": "Germany",
+    "coordinates": [50.1109, 8.6821],
+    "status": "Critical Deficit",
+    "statusColor": "#ff3b30",
+    "metrics": {
+      "primaryStat": "+41.2%",
+      "primaryLabel": "Green Demand Surge",
+      "detail1": "15.1%",
+      "label1": "Total Green Job Share",
+      "detail2": "Solar Engineering & Policy",
+      "label2": "Top In-Demand Skills"
+    },
+    "connections": ["London", "Paris", "Stockholm"]
+  },
+  {
+    "city": "Stockholm",
+    "country": "Sweden",
+    "coordinates": [59.3293, 18.0686],
+    "status": "Balanced",
+    "statusColor": "#34c759",
+    "metrics": {
+      "primaryStat": "+14.7%",
+      "primaryLabel": "Green Demand Surge",
+      "detail1": "18.3%",
+      "label1": "Total Green Job Share",
+      "detail2": "Sustainable Sourcing",
+      "label2": "Top In-Demand Skills"
+    },
+    "connections": ["Frankfurt", "London"]
+  },
+  {
+    "city": "Bangalore",
+    "country": "India",
+    "coordinates": [12.9716, 77.5946],
+    "status": "High Demand",
+    "statusColor": "#ffcc00",
+    "metrics": {
+      "primaryStat": "+22.8%",
+      "primaryLabel": "Green Demand Surge",
+      "detail1": "6.5%",
+      "label1": "Total Green Job Share",
+      "detail2": "Environmental Analytics",
+      "label2": "Top In-Demand Skills"
+    },
+    "connections": ["Singapore", "London"]
+  }
+]

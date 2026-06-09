@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Community Pro ─────────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Community Pro';
+  src: url('./fonts/CommunityPro-BoldWEB.woff2') format('woff2'),
+       url('./fonts/CommunityPro-BoldWEB.woff')  format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Community Pro';
+  src: url('./fonts/CommunityPro-MediumWEB.woff2') format('woff2'),
+       url('./fonts/CommunityPro-MediumWEB.woff')  format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 50%, #06225b 0%, #000104 100%);
+  overflow: hidden;
+}
+
+#globe-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* Detail panel — pops near the clicked dot */
+#detail-panel {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#detail-panel.panel-hidden {
+  opacity: 0;
+  transform: scale(0.94) translateY(6px);
+  pointer-events: none;
+}
+#detail-panel.panel-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+/* Info overlay */
+#info-overlay {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+#info-overlay.info-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Thin custom scrollbar for city list */
+.scrollbar-thin::-webkit-scrollbar { width: 3px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+/* ── Responsive overrides ─────────────────────────────────────────── */
+@media (max-width: 639px) {
+  /* City grid: single column on small phones */
+  #city-list { grid-template-columns: 1fr 1fr; }
+
+  /* Detail panel: full-width card at top of screen */
+  #detail-panel {
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    top: 16px !important;
+  }
+  /* Slide in from top on mobile instead of left */
+  #detail-panel.panel-hidden  { transform: translateY(-12px) scale(0.96); }
+  #detail-panel.panel-visible { transform: translateY(0)     scale(1); }
+
+  /* Info overlay: full width inside panel */
+  #info-overlay { width: calc(100% - 8px); right: 4px; }
+}
